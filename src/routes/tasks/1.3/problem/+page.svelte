@@ -30,10 +30,7 @@
 			<div class="body-part" style={calculatePositionAsStyle(bodyPart)} />
 		{/each}
 
-		<div
-			style="left: {apple.x * CELL_SIZE}px; top: {apple.y * CELL_SIZE}px"
-			class="apple"
-		/>
+		<div style={calculatePositionAsStyle(apple)} class="apple" />
 	</div>
 </div>
 
