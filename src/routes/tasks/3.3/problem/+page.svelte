@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from "svelte";
 	import {
 		DIRECTION,
 		DIRECTION_TO_VECTOR,
@@ -8,7 +9,7 @@
 		pickRandomOpenSpace,
 	} from "$lib/game-helpers.js";
 
-	const TICK_TIME = 100;
+	const TICK_TIME = 200;
 	const BOARD_DIMENSIONS = { x: 20, y: 20 };
 
 	let snake = [
@@ -19,11 +20,17 @@
 	let apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
 	let score = 0;
 	let willGrow = false;
+	let headDirection = DIRECTION.SOUTH;
 
 	$: if (isEqual(snake[0], apple)) {
 		score += 1;
 		willGrow = true;
 		apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
+	}
+
+	function moveSnake() {
+		snake = getNextSnake(snake, DIRECTION_TO_VECTOR[headDirection], willGrow);
+		willGrow = false;
 	}
 
 	function handleKeydown(event) {
@@ -32,9 +39,13 @@
 			return;
 		}
 
-		snake = getNextSnake(snake, DIRECTION_TO_VECTOR[keyDirection], willGrow);
-		willGrow = false;
+		headDirection = keyDirection;
 	}
+
+	onMount(() => {
+		const id = setInterval(moveSnake, TICK_TIME);
+		return () => clearInterval(id);
+	});
 
 	const CELL_SIZE = 25;
 
