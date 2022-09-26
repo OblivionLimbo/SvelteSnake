@@ -19,7 +19,13 @@
 			coordinate.y * CELL_SIZE
 		}px`;
 	}
+
+	function handleKeyDown(e) {
+		console.log(e);
+	}
 </script>
+
+<svelte:body on:keydown={handleKeyDown} />
 
 <div class="main-content min-width">
 	<div class="score">{score}</div>
