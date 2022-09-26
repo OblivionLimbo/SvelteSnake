@@ -1,6 +1,10 @@
 <script>
-	import { pickRandomOpenSpace } from "$lib/game-helpers.js";
-
+	import {
+		pickRandomOpenSpace,
+		convertKeyboardKeyToDirection,
+		getNextSnake,
+	} from "$lib/game-helpers.js";
+	import { DIRECTION_TO_VECTOR } from "$lib/game-helpers.js";
 	const TICK_TIME = 100;
 	const BOARD_DIMENSIONS = { x: 20, y: 20 };
 
@@ -19,9 +23,16 @@
 			coordinate.y * CELL_SIZE
 		}px`;
 	}
+
+	function handleKeyDown(e) {
+		const direction = convertKeyboardKeyToDirection(e.key);
+		if (direction) {
+			snake = getNextSnake(snake, DIRECTION_TO_VECTOR[direction]);
+		}
+	}
 </script>
 
-<svelte:body on:keydown={console.log} />
+<svelte:body on:keydown={handleKeyDown} />
 
 <div class="main-content min-width">
 	<div class="score">{score}</div>
