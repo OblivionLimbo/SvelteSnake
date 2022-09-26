@@ -4,6 +4,7 @@
 		convertKeyboardKeyToDirection,
 		getNextSnake,
 		pickRandomOpenSpace,
+		isEqual,
 	} from "$lib/game-helpers.js";
 
 	const TICK_TIME = 100;
@@ -14,6 +15,12 @@
 		{ x: 4, y: 3 },
 		{ x: 4, y: 2 },
 	];
+
+	$: if (isEqual(snake[0], apple)) {
+		apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
+		score += 1;
+	}
+
 	let apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
 	let score = 0;
 
