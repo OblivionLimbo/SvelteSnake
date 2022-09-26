@@ -8,9 +8,11 @@
 		getNextSnake,
 		isEqual,
 		pickRandomOpenSpace,
+		isInsideBoard,
+		isSnakeEatingItself,
 	} from "$lib/game-helpers.js";
 
-	const TICK_TIME = 100;
+	const TICK_TIME = 200;
 	const BOARD_DIMENSIONS = { x: 20, y: 20 };
 
 	let snake = [
@@ -34,6 +36,14 @@
 		apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
 	}
 
+	$: if (
+		!isInsideBoard(BOARD_DIMENSIONS, snake[0]) ||
+		isSnakeEatingItself(snake)
+	) {
+		console.log("Game over!");
+		stopTicking();
+	}
+
 	function handleKeydown(event) {
 		const keyDirection = convertKeyboardKeyToDirection(event.key);
 		if (!keyDirection) {
@@ -44,6 +54,7 @@
 	}
 
 	let stopTicking = () => {};
+
 	onMount(() => {
 		const id = setInterval(moveSnake, TICK_TIME);
 		stopTicking = () => clearInterval(id);
