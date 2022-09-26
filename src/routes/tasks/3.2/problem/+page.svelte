@@ -17,9 +17,11 @@
 	];
 	let apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
 	let score = 0;
+	let willGrow = false;
 
 	$: if (isEqual(snake[0], apple)) {
 		score += 1;
+		willGrow = true;
 		apple = pickRandomOpenSpace(BOARD_DIMENSIONS, snake);
 	}
 
@@ -29,7 +31,8 @@
 			return;
 		}
 
-		snake = getNextSnake(snake, DIRECTION_TO_VECTOR[keyDirection]);
+		snake = getNextSnake(snake, DIRECTION_TO_VECTOR[keyDirection], willGrow);
+		willGrow = false;
 	}
 
 	const CELL_SIZE = 25;
