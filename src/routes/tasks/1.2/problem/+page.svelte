@@ -20,7 +20,12 @@
 		class="board"
 		style="--cell-size: {CELL_SIZE}px; --tick-time: {TICK_TIME}ms; --board-size-x: {BOARD_DIMENSIONS.x}; --board-size-y: {BOARD_DIMENSIONS.y}"
 	>
-		<div class="body-part" />
+		{#each snake as part}
+			<div
+				class="body-part"
+				style="left: {part.x * CELL_SIZE}px; top: {part.y * CELL_SIZE}px"
+			/>
+		{/each}
 
 		<div
 			style="left: {apple.x * CELL_SIZE}px; top: {apple.y * CELL_SIZE}px"
