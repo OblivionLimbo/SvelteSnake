@@ -10,6 +10,7 @@
 		isInsideBoard,
 		isSnakeEatingItself,
 		pickRandomOpenSpace,
+		arePerpendicular,
 	} from "$lib/game-helpers.js";
 
 	const TICK_TIME = 100;
@@ -49,8 +50,9 @@
 		if (!keyDirection) {
 			return;
 		}
-
-		headDirection = keyDirection;
+		if (arePerpendicular(keyDirection, headDirection)) {
+			headDirection = keyDirection;
+		}
 	}
 
 	let stopTicking = () => {};
