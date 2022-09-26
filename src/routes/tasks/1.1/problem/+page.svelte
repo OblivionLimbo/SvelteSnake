@@ -2,11 +2,11 @@
 	const TICK_TIME = 100;
 	const BOARD_DIMENSIONS = { x: 20, y: 20 };
 
-	let snake = [
-		{ x: 4, y: 4 },
-		{ x: 4, y: 3 },
-		{ x: 4, y: 2 },
-	];
+	// let snake = [
+	// 	{ x: 4, y: 4 },
+	// 	{ x: 4, y: 3 },
+	// 	{ x: 4, y: 2 },
+	// ];
 	let apple = { x: 8, y: 8 };
 	let score = 0;
 
@@ -22,7 +22,10 @@
 	>
 		<div class="body-part" />
 
-		<div class="apple" />
+		<div
+			class="apple"
+			style="top: {apple.y * CELL_SIZE}px; left: {apple.x * CELL_SIZE}px"
+		/>
 	</div>
 </div>
 
