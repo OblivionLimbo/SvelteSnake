@@ -4,13 +4,13 @@
 	import {
 		DIRECTION,
 		DIRECTION_TO_VECTOR,
-		arePerpendicular,
 		convertKeyboardKeyToDirection,
 		getNextSnake,
 		isEqual,
 		isInsideBoard,
 		isSnakeEatingItself,
 		pickRandomOpenSpace,
+		shiftNonPerpendicularMovesOffQueue,
 	} from "$lib/game-helpers.js";
 
 	const TICK_TIME = 100;
@@ -29,6 +29,14 @@
 	let willGrow = false;
 
 	function moveSnake() {
+		const shiftedQueue = shiftNonPerpendicularMovesOffQueue(
+			headDirectionQueue,
+			headDirection
+		);
+		const nextDirection = shiftedQueue[0] ?? headDirection;
+		const nextQueue = shiftedQueue.slice(1);
+		headDirectionQueue = nextQueue;
+		headDirection = nextDirection;
 		snake = getNextSnake(snake, DIRECTION_TO_VECTOR[headDirection], willGrow);
 		willGrow = false;
 	}
@@ -51,9 +59,7 @@
 		if (!keyDirection) {
 			return;
 		}
-		if (arePerpendicular(keyDirection, headDirection)) {
-			headDirection = keyDirection;
-		}
+		headDirectionQueue = [...headDirectionQueue, keyDirection];
 	}
 
 	let stopTicking = () => {};
